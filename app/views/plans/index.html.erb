@@ -1,0 +1,11 @@
+<h1>Plans#index</h1>
+<%= link_to "Home", root_path %>
+<ul>
+	<% @plans.each do |plan| %>
+		<li>
+			<%= plan %>
+			<%= button_to "Edit", edit_plan_path(plan), method: :get %>
+			<%= button_to "Delete", plan_path(plan), method: :delete %>
+		</li>
+	<% end %>
+</ul>
