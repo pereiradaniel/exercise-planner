@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220184522) do
+ActiveRecord::Schema.define(version: 20151223185711) do
+
+  create_table "macrocycles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "plan_id"
+    t.string   "title"
+    t.datetime "start_date"
+    t.datetime "end_date"
+  end
+
+  create_table "mesocycles", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "macrocycle_id"
+    t.string   "title"
+  end
+
+  create_table "micocycles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "plans", force: :cascade do |t|
     t.datetime "created_at", null: false

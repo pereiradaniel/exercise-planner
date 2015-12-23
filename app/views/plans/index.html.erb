@@ -1,11 +1,78 @@
 <h1>Plans#index</h1>
 <%= link_to "Home", root_path %>
-<ul>
-	<% @plans.each do |plan| %>
-		<li>
-			<%= plan %>
-			<%= button_to "Edit", edit_plan_path(plan), method: :get %>
-			<%= button_to "Delete", plan_path(plan), method: :delete %>
-		</li>
-	<% end %>
+
+<ul>Options
+	<li>
+		<%= form_for(@plan) do |f| %>
+			<%= f.hidden_field :user_id, {value: current_user.id} %>
+			<%= f.submit %>
+		<% end %>	
+	</li>
 </ul>
+
+<% if @plans.length > 0 %>
+	<ul>Exercise plans
+		<% @plans.each do |plan| %>
+
+			<ul>Object ID: <%= plan.id %>
+				<li>
+					<%= form_for(@macrocycle) do |f| %>
+						<%= f.hidden_field :plan_id, {value: plan.id} %>
+						<%= f.submit %>
+					<% end %>
+				</li>
+				<li>
+					<%= button_to "Edit", edit_plan_path(plan), method: :get %>
+				</li>
+				<li>
+					<%= button_to "Delete", plan_path(plan), method: :delete %>
+				</li>
+			</ul>
+
+			<ul>Macrocycles
+				<% plan.macrocycles.each do |macrocycle| %>
+					<ul>Macrocycle ID: <%= macrocycle.id %>
+						<li>
+							<%= form_for(@mesocycle) do |f| %>
+								<%= f.hidden_field :macrocycle_id, {value: macrocycle.id} %>
+								<%= f.submit %>
+							<% end %>
+						</li>
+						<%= form_for(macrocycle) do |f| %>
+							<li>
+								<%= f.text_field :title %>
+							</li>
+							<li>
+								<%= f.submit %>
+							</li>
+
+								<ul>Mesocycles
+									<% macrocycle.mesocycles.each do |mesocycle| %>
+									<li>
+										<%= mesocycle %>
+									</li>
+									<li>
+										<%= mesocycle.title %>
+									</li>
+									<li>
+										<%= button_to "Delete mesocycle", mesocycle_path(mesocycle.id), method: :delete %>
+									</li>
+									<% end %>
+								</ul>
+							</li>
+						<% end %>
+						<li>
+							<%= button_to "Delete macrocycle", macrocycle_path(macrocycle), method: :delete %>
+						</li>
+					</ul>
+				<% end %>
+			</ul>
+
+		<% end %>
+	</ul>
+<% else %>
+	No plans exist!
+<% end %>
+
+<div id="works">
+</div>
