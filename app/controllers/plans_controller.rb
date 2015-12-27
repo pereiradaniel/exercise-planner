@@ -10,6 +10,7 @@ class PlansController < ApplicationController
 		@mesocycle = Mesocycle.new
 		@microcycle = Microcycle.new
 		@day = Day.new
+		@exercise = Exercise.new
 	end
 
 	def new

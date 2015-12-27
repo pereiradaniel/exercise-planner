@@ -110,9 +110,40 @@
 																		<li>
 																			Title: <%= day.title %>
 																		</li>
+																		
+																		<li>Exercises:
+																			<ul>
+																				<% day.exercises.each do |exercise| %>
+																				<li>
+																					Exercise: <%= exercise.name %>
+																				</li>
+																				<li>
+																					<%= button_to "Delete exercise", exercise_path(exercise.id), method: :delete %>
+																				</li>
+																				<% end %>
+																			</ul>
+																		</li>
+
 																		<li>
 																			<%= button_to "Delete day", day_path(day.id), method: :delete %>
 																		</li>
+
+																		<li>
+																			<ul>Add exercise to day
+																				<%= form_for(@exercise) do |f| %>
+																				<li>
+																					Name: <%= f.text_field :name %>
+																				</li>
+																				<li>
+																					<%= f.hidden_field :day_id, {value: day.id} %>
+																				</li>
+																				<li>
+																					<%= f.submit %>
+																				</li>
+																				<% end %>
+																			</ul>
+																		</li>
+
 																	</ul>
 																<% end %>
 															</ul>
