@@ -8,6 +8,7 @@ class PlansController < ApplicationController
 		@plan = Plan.new
 		@macrocycle = Macrocycle.new
 		@mesocycle = Mesocycle.new
+		@microcycle = Microcycle.new
 	end
 
 	def new

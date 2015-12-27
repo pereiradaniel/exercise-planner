@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MicocycleTest < ActiveSupport::TestCase
+class MicrocyclesControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
