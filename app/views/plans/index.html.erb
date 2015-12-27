@@ -2,7 +2,7 @@
 <%= link_to "Home", root_path %>
 
 <ul>Options
-	<li>
+	<li>Create a new exercise plan:
 		<%= form_for(@plan) do |f| %>
 			<%= f.hidden_field :user_id, {value: current_user.id} %>
 			<%= f.submit %>
@@ -14,63 +14,57 @@
 	<ul>Exercise plans
 		<% @plans.each do |plan| %>
 
-			<ul>Object ID: <%= plan.id %>
-				<%= form_for(@macrocycle) do |f| %>
-				<li>
-					Title: <%= f.text_field :title %>
-				</li>		
+			<ul>Plan ID: <%= plan.id %>
+				<%= button_to "Delete plan", plan_path(plan), method: :delete %>
+				<ul>Add macrocycle to plan
+					<%= form_for(@macrocycle) do |f| %>
+					<li>
+						Title: <%= f.text_field :title %>
+					</li>		
 						<%= f.hidden_field :plan_id, {value: plan.id} %>
+					<li>
 						<%= f.submit %>
+					</li>
 					<% end %>
-				<li>
-					<%= button_to "Edit", edit_plan_path(plan), method: :get %>
-				</li>
-				<li>
-					<%= button_to "Delete", plan_path(plan), method: :delete %>
-				</li>
+				</ul>
 			</ul>
 
-			<ul>Macrocycles
+			<ul>Plan <%= plan.id %> Macrocycles
 				<% plan.macrocycles.each do |macrocycle| %>
-					<ul>
-						<li>
-							Macrocycle ID: <%= macrocycle.id %>
-						</li>
+					<ul>Macrocycle ID: <%= macrocycle.id %>
 						<li>
 							Title: <%= macrocycle.title %>
 						</li>
 						<li>
-							<%= form_for(@mesocycle) do |f| %>
-								<%= f.hidden_field :macrocycle_id, {value: macrocycle.id} %>
-								<%= f.submit %>
-							<% end %>
+						<%= button_to "Delete macrocycle", macrocycle_path(macrocycle), method: :delete %>
 						</li>
-						
-							<%= form_for(macrocycle) do |f| %>
+						<li>
+							<ul>Add mesocycle to macrocycle <%= macrocycle.id %>
+								<%= form_for(@mesocycle) do |f| %>
 								<li>
 									Title: <%= f.text_field :title %>
 								</li>
+									<%= f.hidden_field :macrocycle_id, {value: macrocycle.id} %>
 								<li>
-								<%= f.submit %>
+									<%= f.submit %>
 								</li>
-
-								<ul>Mesocycles
-									<% macrocycle.mesocycles.each do |mesocycle| %>
-									<li>
-										Mesocycle ID: <%= mesocycle.id %>
-									</li>
+								<% end %>
+							</ul>
+						</li>
+						
+						<li>
+							<ul>Mesocycles
+								<% macrocycle.mesocycles.each do |mesocycle| %>
+								<ul>Mesocycle ID: <%= mesocycle.id %>
 									<li>
 										Title: <%= mesocycle.title %>
 									</li>
 									<li>
 										<%= button_to "Delete mesocycle", mesocycle_path(mesocycle.id), method: :delete %>
 									</li>
-									<% end %>
 								</ul>
-							</li>
-						<% end %>
-						<li>
-							<%= button_to "Delete macrocycle", macrocycle_path(macrocycle), method: :delete %>
+								<% end %>
+							</ul>
 						</li>
 					</ul>
 				<% end %>
