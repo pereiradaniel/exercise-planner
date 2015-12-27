@@ -63,31 +63,64 @@
 										<li>
 											<%= button_to "Delete mesocycle", mesocycle_path(mesocycle.id), method: :delete %>
 										</li>
+										
+										<li>
+											<ul>Add microcycle to mesocycle
+												<%= form_for(@microcycle) do |f| %>
+												<li>
+													Title: <%= f.text_field :title %>
+												</li>
+													<%= f.hidden_field :mesocycle_id, {value: mesocycle.id} %>
+												<li>
+													<%= f.submit %>
+												</li>
+												<% end %>
+											</ul>
+										</li>
+	
+										<li>
+											<ul>
+												<% mesocycle.microcycles.each do |microcycle| %>
+													<ul>Microcycle ID: <%= microcycle.id %>
+														<li>
+															Title: <%= microcycle.title %>
+														</li>
+														<li>
+															<%= button_to "Delete microcycle", microcycle_path(microcycle.id), method: :delete %>
+														</li>
 
-										<ul>Add microcycle to mesocycle
-											<%= form_for(@microcycle) do |f| %>
-											<li>
-												Title: <%= f.text_field :title %>
-											</li>
-												<%= f.hidden_field :mesocycle_id, {value: mesocycle.id} %>
-											<li>
-												<%= f.submit %>
-											</li>
-											<% end %>
-										</ul>
-
-										<ul>
-											<% mesocycle.microcycles.each do |microcycle| %>
-												<ul>Microcycle ID: <%= microcycle.id %>
-													<li>
-														Title: <%= microcycle.title %>
-													</li>
-													<li>
-														<%= button_to "Delete microcycle", microcycle_path(microcycle.id), method: :delete %>
-													</li>
-												</ul>
-											<% end %>
-										</ul>
+														<li>
+															<ul>Add day to microcycle
+																<%= form_for(@day) do |f| %>
+																<li>
+																	<%= f.text_field :title %>
+																</li>
+																	<%= f.hidden_field :microcycle_id, {value: microcycle.id} %>
+																<li>
+																	<%= f.submit %>
+																</li>
+																<% end %>
+															</ul>
+														</li>
+														
+														<li>
+															<ul>Microcycle <% microcycle.id %> days
+																<% microcycle.days.each do |day| %>
+																	<ul>Day ID: <%= day.id %>
+																		<li>
+																			Title: <%= day.title %>
+																		</li>
+																		<li>
+																			<%= button_to "Delete day", day_path(day.id), method: :delete %>
+																		</li>
+																	</ul>
+																<% end %>
+															</ul>
+														</li>		
+													</ul>
+												<% end %>
+											</ul>
+										</li>
 									</ul>
 
 								<% end %>

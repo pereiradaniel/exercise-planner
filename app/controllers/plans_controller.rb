@@ -9,6 +9,7 @@ class PlansController < ApplicationController
 		@macrocycle = Macrocycle.new
 		@mesocycle = Mesocycle.new
 		@microcycle = Microcycle.new
+		@day = Day.new
 	end
 
 	def new
