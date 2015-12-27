@@ -1,0 +1,152 @@
+<h1>Exercise plans</h1>
+<% @plans.each do |plan| %>
+
+	<ul>Plan ID: <%= plan.id %>
+		<%= button_to "Delete plan", plan_path(plan), method: :delete %>
+		<ul>Add macrocycle to plan
+			<%= form_for(@macrocycle) do |f| %>
+			<li>
+				Title: <%= f.text_field :title %>
+			</li>		
+				<%= f.hidden_field :plan_id, {value: plan.id} %>
+			<li>
+				<%= f.submit %>
+			</li>
+			<% end %>
+		</ul>
+	</ul>
+
+	<ul>Plan <%= plan.id %> Macrocycles
+		<% plan.macrocycles.each do |macrocycle| %>
+			<ul>Macrocycle ID: <%= macrocycle.id %>
+				<li>
+					Title: <%= macrocycle.title %>
+				</li>
+				<li>
+				<%= button_to "Delete macrocycle", macrocycle_path(macrocycle), method: :delete %>
+				</li>
+				<li>
+					<ul>Add mesocycle to macrocycle <%= macrocycle.id %>
+						<%= form_for(@mesocycle) do |f| %>
+						<li>
+							Title: <%= f.text_field :title %>
+						</li>
+							<%= f.hidden_field :macrocycle_id, {value: macrocycle.id} %>
+						<li>
+							<%= f.submit %>
+						</li>
+						<% end %>
+					</ul>
+				</li>
+				
+				<li>
+					<ul>Macro <%= macrocycle.id %> Mesocycles
+						<% macrocycle.mesocycles.each do |mesocycle| %>
+
+							<ul>Mesocycle ID: <%= mesocycle.id %>
+								<li>
+									Title: <%= mesocycle.title %>
+								</li>
+								<li>
+									<%= button_to "Delete mesocycle", mesocycle_path(mesocycle.id), method: :delete %>
+								</li>
+								
+								<li>
+									<ul>Add microcycle to mesocycle
+										<%= form_for(@microcycle) do |f| %>
+										<li>
+											Title: <%= f.text_field :title %>
+										</li>
+											<%= f.hidden_field :mesocycle_id, {value: mesocycle.id} %>
+										<li>
+											<%= f.submit %>
+										</li>
+										<% end %>
+									</ul>
+								</li>
+
+								<li>
+									<ul>
+										<% mesocycle.microcycles.each do |microcycle| %>
+											<ul>Microcycle ID: <%= microcycle.id %>
+												<li>
+													Title: <%= microcycle.title %>
+												</li>
+												<li>
+													<%= button_to "Delete microcycle", microcycle_path(microcycle.id), method: :delete %>
+												</li>
+
+												<li>
+													<ul>Add day to microcycle
+														<%= form_for(@day) do |f| %>
+														<li>
+															<%= f.text_field :title %>
+														</li>
+															<%= f.hidden_field :microcycle_id, {value: microcycle.id} %>
+														<li>
+															<%= f.submit %>
+														</li>
+														<% end %>
+													</ul>
+												</li>
+												
+												<li>
+													<ul>Microcycle <% microcycle.id %> days
+														<% microcycle.days.each do |day| %>
+															<ul>Day ID: <%= day.id %>
+																<li>
+																	Title: <%= day.title %>
+																</li>
+
+																<li>Exercises:
+																	<ul>
+																		<% day.exercises.each do |exercise| %>
+																		<li>
+																			Exercise: <%= exercise.name %>
+																		</li>
+																		<li>
+																			<%= button_to "Delete exercise", exercise_path(exercise.id), method: :delete %>
+																		</li>
+																		<% end %>
+																	</ul>
+																</li>
+
+																<li>
+																	<%= button_to "Delete day", day_path(day.id), method: :delete %>
+																</li>
+
+																<li>
+																	<ul>Add exercise to day
+																		<%= form_for(@exercise) do |f| %>
+																		<li>
+																			Name: <%= f.text_field :name %>
+																		</li>
+																		<li>
+																			<%= f.hidden_field :day_id, {value: day.id} %>
+																		</li>
+																		<li>
+																			<%= f.submit %>
+																		</li>
+																		<% end %>
+																	</ul>
+																</li>
+
+															</ul>
+														<% end %>
+													</ul>
+												</li>		
+											</ul>
+										<% end %>
+									</ul>
+								</li>
+							</ul>
+
+						<% end %>
+					</ul>
+				</li>
+
+			</ul>
+		<% end %>
+	</ul>
+
+<% end %>
