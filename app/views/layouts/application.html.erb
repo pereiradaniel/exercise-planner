@@ -7,23 +7,37 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="page-header">
+    <h1>Exercise Planner</h1>
+  </div>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+  <% if alert %>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span></button>
+      <strong>Warning!</strong><%= alert %>
+    </div>
+  <% end %>
+  <% if notice %>
+    <div class="alert alert-info" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span></button>
+      <%= notice %>
+    </div>
+  <% end %>
 
 <% if user_signed_in? %>
-  Logged in as <strong><%= current_user.email %></strong>.
-<ul class="nav nav-pills">
-	<li role="presentation" class="active"><%= link_to 'Edit profile', edit_user_registration_path %></li>
-	<li role="presentation" class="active"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
-	<li role="presentation" class="active"><%= link_to "View my exercise plans", plans_path(current_user) %></li>
-</ul>
-
+    Logged in as <strong><%= current_user.email %></strong>.
+  <ul class="nav nav-pills">
+  	<li role="presentation" class="active"><%= link_to 'Edit profile', edit_user_registration_path %></li>
+  	<li role="presentation" class="active"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+  	<li role="presentation" class="active"><%= link_to "View my exercise plans", plans_path(current_user) %></li>
+  </ul>
 <% else %>
-<ul class="nav nav-pills">
-  <li role="presentation" class="active"><%= link_to "Sign up", new_user_registration_path %></li>
-  <li role="presentation" class="active"><%= link_to "Login", new_user_session_path  %></li>
-</ul>
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active"><%= link_to "Sign up", new_user_registration_path %></li>
+    <li role="presentation" class="active"><%= link_to "Login", new_user_session_path  %></li>
+  </ul>
 <% end %>
 
 <%= yield %>
